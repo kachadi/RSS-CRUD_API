@@ -11,16 +11,16 @@ export default class UserRepository {
     return this.arr;
   }
 
-  async create(data: IUser) {
+  async create(data: any) {
     this.arr.push(data);
-    return data.id;
+    return data;
   }
 
-  async find(id: string) {
-    return this.arr.filter((item) => item.id === id)[0];
+  async find(id: string): Promise<any> {
+    return this.arr.filter((item: any) => item.id === id)[0];
   }
 
-  async update(id: string, newDataObj: IUser) {
+  async update(id: string, newDataObj: any) {
     const sourceObj = await this.find(id);
 
     for (const key in sourceObj) {
@@ -28,12 +28,12 @@ export default class UserRepository {
         sourceObj[key] = newDataObj[key];
       }
     }
-    
+
     return sourceObj;
   }
 
   async delete(searchedId: string) {
-    let indexOfSearchedObj: number;
+    let indexOfSearchedObj: number | undefined = undefined;
     this.arr.findIndex((el: any, i) => {
       if (el.id === searchedId) {
         indexOfSearchedObj = i;
@@ -41,10 +41,10 @@ export default class UserRepository {
       }
     });
 
-    this.arr.splice(indexOfSearchedObj, 1);
+    this.arr.splice(indexOfSearchedObj!, 1);
   }
 
   async checkUser(id: string) {
-    return this.arr.find((item) => item.id === id);
+    return this.arr.find((item: any) => item.id === id);
   }
 }

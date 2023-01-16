@@ -23,10 +23,10 @@ const routes = async (req: IncomingMessage, res: ServerResponse) => {
       break;
 
     case '/api/users/:POST':
-      const newUserId = await userService.createUser(req);
+      result = await userService.createUser(req);
       createResponse(res, 201, {
         message: 'User successfully created.',
-        id: newUserId,
+        result: result,
       });
       break;
 

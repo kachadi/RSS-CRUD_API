@@ -64,7 +64,11 @@ export default class UserService {
     await req.on('data', (chunk) => {
       data.push(chunk);
     });
-    return await JSON.parse(data.toString());
+    try {
+      return await JSON.parse(data.toString());
+    } catch (error) {
+      throw new VALIDATION_ERROR(ERR_MSG_INVALID_REQUEST_FIELDS);
+    }
   }
 
   async validateId(id: string) {
@@ -91,7 +95,6 @@ export default class UserService {
 
     userEntries.forEach((entry) => {
       const [key, value] = entry;
-
       if (
         (key === 'username' && typeof value !== 'string') ||
         (key === 'age' && typeof value !== 'number') ||

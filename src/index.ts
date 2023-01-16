@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import handler from './handler';
 
 dotenv.config();
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 5000;
 
 const server = http.createServer(handler);
 
