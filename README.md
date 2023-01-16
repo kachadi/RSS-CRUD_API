@@ -50,6 +50,6 @@ Implemented endpoint: `api/users`.
 
 `POST api/users` - to create record about new user and store it in database
 
-`PUT api/users/${userId}` - to update existing user (**all fields required**)
+`PUT api/users/${userId}` - to update existing user
 
 `DELETE api/users/${userId}` - to delete existing user from database
