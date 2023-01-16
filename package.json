@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon dist/index.js",
     "start:prod": "tsc & nodemon dist/index.js",
-    "test": "jest --detectOpenHandles"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",

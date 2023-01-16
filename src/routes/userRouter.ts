@@ -2,9 +2,11 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { generateInstance } from '../factories/userFactory';
 import { ERR_MSG_ENDPOINT_NOT_FOUND } from '../utils/constants';
 import { createResponse } from '../utils/helpers';
+import { StatusCode } from '../utils/constants';
 
 const USERS: string[] = [];
 const userService = generateInstance(USERS);
+const API_URL = '/api/users/';
 
 const routes = async (req: IncomingMessage, res: ServerResponse) => {
   const [api, users, id, ...rest] = req.url!.split('/').filter(Boolean);
@@ -17,36 +19,36 @@ const routes = async (req: IncomingMessage, res: ServerResponse) => {
   let result;
 
   switch (key) {
-    case '/api/users/:GET':
+    case `${API_URL}:GET`:
       result = await userService.findAll();
-      createResponse(res, 200, { result: result });
+      createResponse(res, StatusCode.OK, { result: result });
       break;
 
-    case '/api/users/:POST':
+    case `${API_URL}:POST`:
       result = await userService.createUser(req);
-      createResponse(res, 201, {
+      createResponse(res, StatusCode.CREATED, {
         message: 'User successfully created.',
         result: result,
       });
       break;
 
-    case `/api/users/${id}:GET`:
+    case `${API_URL}${id}:GET`:
       result = await userService.find(id);
-      createResponse(res, 200, { result: result });
+      createResponse(res, StatusCode.OK, { result: result });
       break;
 
-    case `/api/users/${id}:PUT`:
+    case `${API_URL}${id}:PUT`:
       result = await userService.updateUser(req, id);
-      createResponse(res, 200, { result: result });
+      createResponse(res, StatusCode.OK, { result: result });
       break;
 
-    case `/api/users/${id}:DELETE`:
+    case `${API_URL}${id}:DELETE`:
       result = await userService.deleteUser(id);
-      createResponse(res, 204, {});
+      createResponse(res, StatusCode.NO_CONTENT, {});
       break;
 
     default:
-      createResponse(res, 404, { message: ERR_MSG_ENDPOINT_NOT_FOUND });
+      createResponse(res, StatusCode.NOT_FOUND, { message: ERR_MSG_ENDPOINT_NOT_FOUND });
       break;
   }
 };

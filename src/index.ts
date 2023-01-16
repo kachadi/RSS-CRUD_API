@@ -11,4 +11,8 @@ server.listen(PORT, () => {
   console.log(`Server listening on ${PORT}...`);
 });
 
+process.on('SIGINT', () => {
+  server.close(() => process.exit());
+});
+
 export { server };

@@ -17,7 +17,7 @@ export default class UserRepository {
   }
 
   async find(id: string): Promise<any> {
-    return this.arr.filter((item: any) => item.id === id)[0];
+    return this.arr.find((item: any) => item.id === id);
   }
 
   async update(id: string, newDataObj: any) {
